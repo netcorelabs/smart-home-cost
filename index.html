@@ -1,144 +1,122 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Smart Home Cost Estimator | 2025 Pricing</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Home Cost Estimator — Secure Home</title>
+  <meta name="description" content="Estimate full-home smart home & security system costs — equipment, professional installation, and monitoring. Get a downloadable estimate and request quotes."/>
+  <meta name="keywords" content="smart home cost, home security cost, smart lock price, security camera cost, installation cost, monitoring" />
+  <link rel="icon" href="/favicon.ico" />
 
-<!-- SEO -->
-<meta name="description" content="Smart Home Cost Estimator — calculate real installation costs for cameras, smart locks, lighting, hubs, and monitoring in 2025. No signup required.">
-<meta name="keywords" content="smart home cost, home automation cost, security camera price, smart home installation quote">
-<link rel="canonical" href="https://yourdomain.com/">
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Smart Home Cost Estimator — Secure Home" />
+  <meta property="og:description" content="Estimate full-home smart home & security system costs — equipment, installation, monitoring. Download an estimate and request quotes." />
+  <meta property="og:url" content="https://yourdomain.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://yourdomain.com/og-image.png" />
 
-<!-- Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Smart Home Cost Estimator",
-  "url": "https://yourdomain.com/",
-  "applicationCategory": "FinanceApplication",
-  "description": "Calculate smart home pricing instantly."
-}
-</script>
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Smart Home Cost Estimator" />
+  <meta name="twitter:description" content="Estimate full-home smart home & security system costs" />
 
-<!-- Styles -->
-<style>
-* { box-sizing: border-box; font-family: Arial, sans-serif; }
-body { margin:0; background:#f5f6f8; color:#222; line-height:1.6; }
+  <!-- Schema (basic) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"Smart Home Cost Estimator",
+    "url":"https://yourdomain.com/"
+  }
+  </script>
 
-header { background:#111827; color:#fff; padding:2rem; text-align:center; }
-h1 { font-size:2rem; margin:0; }
-
-.container { max-width:900px; margin:2rem auto; background:#fff;
-  padding:2rem; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
-
-.row { display:flex; justify-content:space-between; align-items:center; margin:1.2rem 0; }
-label { font-weight:bold; }
-input[type=range] { width:200px; }
-.value { font-size:1rem; min-width:40px; text-align:right; }
-
-button { background:#2563eb; color:white; border:none; padding:1rem;
-  border-radius:8px; cursor:pointer; font-size:1.1rem; margin-top:1rem; width:100%; }
-button:hover { background:#1d4ed8; }
-
-.result-box { margin-top:2rem; padding:1.5rem; background:#e8f0fe;
-  border-left:6px solid #2563eb; border-radius:8px; }
-.total { font-size:1.8rem; font-weight:bold; }
-
-.footer { text-align:center; font-size:0.85rem; color:#777; margin:2rem 0; }
-</style>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="brand">
+        <img src="/logo-placeholder.png" alt="Your brand logo" class="logo" />
+        <div class="brand-text">
+          <h1>SecureHome Cost Estimator</h1>
+          <p class="tag">Hardware • Installation • Monitoring</p>
+        </div>
+      </div>
+      <nav class="top-nav">
+        <a href="#calculator">Calculator</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn small" href="#contact">Get Quotes</a>
+      </nav>
+    </div>
+  </header>
 
-<header>
-  <h1>Smart Home Cost Estimator</h1>
-  <p>Get your customized automation cost in seconds.</p>
-</header>
+  <main class="wrap main">
+    <section id="hero" class="hero">
+      <div class="hero-left">
+        <h2>Estimate your full-home smart home & security system cost</h2>
+        <p class="lead">Equipment, pro installation, and 1 year of professional monitoring — instant estimate, printable PDF, and request real quotes.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#calculator">Start estimating</a>
+          <a class="btn ghost" href="#how-it-works">How it works</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="card summary-card">
+          <div class="muted">Quick example</div>
+          <div class="large">$3,240</div>
+          <div class="muted">Average first-year cost for a 3-bedroom home</div>
+        </div>
+      </div>
+    </section>
 
-<div class="container">
+    <!-- Calculator -->
+    <section id="calculator" class="card">
+      <h3>Smart Home Cost Calculator — Full Home</h3>
+      <p class="muted">Drag sliders to match your home. Results update instantly.</p>
 
-  <div class="row">
-    <label>Cameras</label>
-    <input type="range" min="0" max="10" value="2" id="cameras" oninput="updateValue('cameras')">
-    <div class="value" id="cameras-val">2</div>
-  </div>
+      <div class="grid">
+        <div class="control">
+          <label>Cameras <span class="muted">(# of cameras)</span></label>
+          <input id="cameras" type="range" min="0" max="10" value="3" oninput="updateLabel('cameras')">
+          <div class="row">
+            <span class="muted small">0</span>
+            <div id="cameras-val" class="pill">3</div>
+            <span class="muted small">10</span>
+          </div>
+        </div>
 
-  <div class="row">
-    <label>Smart Locks</label>
-    <input type="range" min="0" max="5" value="1" id="locks" oninput="updateValue('locks')">
-    <div class="value" id="locks-val">1</div>
-  </div>
+        <div class="control">
+          <label>Smart Locks <span class="muted">(#)</span></label>
+          <input id="locks" type="range" min="0" max="5" value="2" oninput="updateLabel('locks')">
+          <div class="row">
+            <span class="muted small">0</span>
+            <div id="locks-val" class="pill">2</div>
+            <span class="muted small">5</span>
+          </div>
+        </div>
 
-  <div class="row">
-    <label>Smart Lights</label>
-    <input type="range" min="0" max="20" value="6" id="lights" oninput="updateValue('lights')">
-    <div class="value" id="lights-val">6</div>
-  </div>
+        <div class="control">
+          <label>Smart Lights <span class="muted">(# bulbs)</span></label>
+          <input id="lights" type="range" min="0" max="50" value="12" oninput="updateLabel('lights')">
+          <div class="row">
+            <span class="muted small">0</span>
+            <div id="lights-val" class="pill">12</div>
+            <span class="muted small">50</span>
+          </div>
+        </div>
 
-  <div class="row">
-    <label>Voice Assistant Hubs</label>
-    <input type="range" min="0" max="5" value="1" id="hubs" oninput="updateValue('hubs')">
-    <div class="value" id="hubs-val">1</div>
-  </div>
+        <div class="control">
+          <label>Hubs / Assistants <span class="muted">(#)</span></label>
+          <input id="hubs" type="range" min="0" max="5" value="1" oninput="updateLabel('hubs')">
+          <div class="row">
+            <span class="muted small">0</span>
+            <div id="hubs-val" class="pill">1</div>
+            <span class="muted small">5</span>
+          </div>
+        </div>
 
-  <button onclick="calculate()">Calculate Cost</button>
-
-  <div id="results" class="result-box" style="display:none;">
-    <div>Estimated Equipment: $<span id="equip"></span></div>
-    <div>Installation Labor: $<span id="install"></span></div>
-    <div>Monitoring (1 year): $<span id="monitor"></span></div>
-    <hr>
-    <div class="total">Total Estimated Cost: $<span id="total"></span></div>
-  </div>
-
-</div>
-
-<div class="footer">
-  © 2025 Smart Home Cost Estimator — All rights reserved.
-</div>
-
-<script>
-const pricing = {
-  cameras: 120,
-  locks: 180,
-  lights: 25,
-  hubs: 80,
-  installRate: 0.4,
-  monitorAnnual: 25 * 12
-};
-
-function updateValue(id) {
-  document.getElementById(id + "-val").innerText =
-    document.getElementById(id).value;
-}
-
-function calculate() {
-  let cam = parseInt(cameras.value);
-  let lock = parseInt(locks.value);
-  let light = parseInt(lights.value);
-  let hub = parseInt(hubs.value);
-
-  let equipment = cam * pricing.cameras +
-                  lock * pricing.locks +
-                  light * pricing.lights +
-                  hub * pricing.hubs;
-
-  let install = Math.round(equipment * pricing.installRate);
-  let monitor = pricing.monitorAnnual;
-
-  let total = equipment + install + monitor;
-
-  document.getElementById("equip").innerText = equipment;
-  document.getElementById("install").innerText = install;
-  document.getElementById("monitor").innerText = monitor;
-  document.getElementById("total").innerText = total;
-
-  document.getElementById("results").style.display = "block";
-}
-</script>
-
-</body>
-</html>
-
+        <div class="control">
+          <label>Professional Install Complexity</label>
+          <select id="installLevel">
+            <option value="0">DIY (no install)</opt
