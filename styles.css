@@ -37,6 +37,24 @@ body{margin:0;background:var(--bg);color:var(--accent);font-family:Inter,system-
 .muted{color:var(--muted);}
 .small{font-size:12px}
 .pill{background:rgba(31,111,235,0.08);padding:6px 10px;border-radius:8px}
+.card.recommended {
+  transform: scale(1.08);
+  border: 3px solid #3ab65c;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s, border 0.3s;
+}
+
+.badge-recommended {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #3ab65c;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
 
 /* Grid for controls */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:12px}

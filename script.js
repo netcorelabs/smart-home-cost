@@ -185,7 +185,7 @@ function renderComparisonCards(){
           <div style="text-align:right">
             <div class="value">${formatMoney(model.price)}</div>
             <div style="margin-top:8px">
-              <a class="btn outline small" href="${model.affiliate}" target="_blank" rel="noopener noreferrer">Buy</a>
+              <a class="btn outline small" href="${model.affiliate}" target="_blank" rel="noopener noreferrer">Product Details</a>
             </div>
           </div>
         </div>
