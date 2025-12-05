@@ -4,21 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Smart Home Cost Estimator — Secure Home</title>
-  <meta name="description" content="Estimate full-home smart home & security system costs — equipment, professional installation, and monitoring. Get a downloadable estimate and request quotes."/>
-  <meta name="keywords" content="smart home cost, home security cost, smart lock price, security camera cost, installation cost, monitoring" />
+  <meta name="description" content="Estimate full-home smart home & security system costs — equipment, professional installation, and monitoring. Get an itemized estimate and request quotes."/>
   <link rel="icon" href="/favicon.ico" />
 
   <!-- OpenGraph -->
   <meta property="og:title" content="Smart Home Cost Estimator — Secure Home" />
-  <meta property="og:description" content="Estimate full-home smart home & security system costs — equipment, installation, monitoring. Download an estimate and request quotes." />
+  <meta property="og:description" content="Estimate full-home smart home & security system costs — itemized by model & tier." />
   <meta property="og:url" content="https://yourdomain.com/" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://yourdomain.com/og-image.png" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Smart Home Cost Estimator" />
-  <meta name="twitter:description" content="Estimate full-home smart home & security system costs" />
 
   <!-- Schema (basic) -->
   <script type="application/ld+json">
@@ -44,8 +37,8 @@
       </div>
       <nav class="top-nav">
         <a href="#calculator">Calculator</a>
+        <a href="#compare">Compare Models</a>
         <a href="#how-it-works">How it works</a>
-        <a href="#faq">FAQ</a>
         <a class="btn small" href="#contact">Get Quotes</a>
       </nav>
     </div>
@@ -54,69 +47,197 @@
   <main class="wrap main">
     <section id="hero" class="hero">
       <div class="hero-left">
-        <h2>Estimate your full-home smart home & security system cost</h2>
-        <p class="lead">Equipment, pro installation, and 1 year of professional monitoring — instant estimate, printable PDF, and request real quotes.</p>
+        <h2>Itemized smart home pricing — choose models and tiers</h2>
+        <p class="lead">Select device models and quantities to get an accurate equipment cost. Compare popular models and follow affiliate links to purchase.</p>
         <div class="hero-ctas">
           <a class="btn" href="#calculator">Start estimating</a>
-          <a class="btn ghost" href="#how-it-works">How it works</a>
+          <a class="btn ghost" href="#compare">Compare models</a>
         </div>
       </div>
       <div class="hero-right">
         <div class="card summary-card">
           <div class="muted">Quick example</div>
-          <div class="large">$3,240</div>
+          <div class="large" id="example-avg">$3,240</div>
           <div class="muted">Average first-year cost for a 3-bedroom home</div>
         </div>
       </div>
     </section>
 
-    <!-- Calculator -->
+    <!-- Calculator with model selectors -->
     <section id="calculator" class="card">
       <h3>Smart Home Cost Calculator — Full Home</h3>
-      <p class="muted">Drag sliders to match your home. Results update instantly.</p>
+      <p class="muted">Pick device models (tier), set quantities, and view the itemized cost.</p>
 
       <div class="grid">
+
+        <!-- Cameras -->
         <div class="control">
-          <label>Cameras <span class="muted">(# of cameras)</span></label>
-          <input id="cameras" type="range" min="0" max="10" value="3" oninput="updateLabel('cameras')">
-          <div class="row">
-            <span class="muted small">0</span>
+          <label>Cameras</label>
+          <div class="inline-row">
+            <select id="cameraModel" onchange="updateModelLabel('camera')"></select>
+            <input id="cameras" type="range" min="0" max="10" value="3" oninput="updateLabel('cameras')">
             <div id="cameras-val" class="pill">3</div>
-            <span class="muted small">10</span>
           </div>
+          <div class="muted small" id="camera-desc"></div>
         </div>
 
+        <!-- Smart Locks -->
         <div class="control">
-          <label>Smart Locks <span class="muted">(#)</span></label>
-          <input id="locks" type="range" min="0" max="5" value="2" oninput="updateLabel('locks')">
-          <div class="row">
-            <span class="muted small">0</span>
+          <label>Smart Locks</label>
+          <div class="inline-row">
+            <select id="lockModel" onchange="updateModelLabel('lock')"></select>
+            <input id="locks" type="range" min="0" max="5" value="2" oninput="updateLabel('locks')">
             <div id="locks-val" class="pill">2</div>
-            <span class="muted small">5</span>
           </div>
+          <div class="muted small" id="lock-desc"></div>
         </div>
 
+        <!-- Smart Lights -->
         <div class="control">
-          <label>Smart Lights <span class="muted">(# bulbs)</span></label>
-          <input id="lights" type="range" min="0" max="50" value="12" oninput="updateLabel('lights')">
-          <div class="row">
-            <span class="muted small">0</span>
+          <label>Smart Lights</label>
+          <div class="inline-row">
+            <select id="lightModel" onchange="updateModelLabel('light')"></select>
+            <input id="lights" type="range" min="0" max="50" value="12" oninput="updateLabel('lights')">
             <div id="lights-val" class="pill">12</div>
-            <span class="muted small">50</span>
           </div>
+          <div class="muted small" id="light-desc"></div>
         </div>
 
+        <!-- Hubs -->
         <div class="control">
-          <label>Hubs / Assistants <span class="muted">(#)</span></label>
-          <input id="hubs" type="range" min="0" max="5" value="1" oninput="updateLabel('hubs')">
-          <div class="row">
-            <span class="muted small">0</span>
+          <label>Hubs / Assistants</label>
+          <div class="inline-row">
+            <select id="hubModel" onchange="updateModelLabel('hub')"></select>
+            <input id="hubs" type="range" min="0" max="5" value="1" oninput="updateLabel('hubs')">
             <div id="hubs-val" class="pill">1</div>
-            <span class="muted small">5</span>
           </div>
+          <div class="muted small" id="hub-desc"></div>
         </div>
 
         <div class="control">
           <label>Professional Install Complexity</label>
           <select id="installLevel">
-            <option value="0">DIY (no install)</opt
+            <option value="0">DIY (no install)</option>
+            <option value="75">Standard — per device $75</option>
+            <option value="120">Complex — per device $120</option>
+          </select>
+        </div>
+
+        <div class="control">
+          <label>Monitoring Plan (monthly)</label>
+          <select id="monitorPlan">
+            <option value="0">No monitoring</option>
+            <option value="15">Basic — $15 / month</option>
+            <option value="25" selected>Pro — $25 / month</option>
+            <option value="45">Premium — $45 / month</option>
+          </select>
+        </div>
+
+      </div><!-- grid -->
+
+      <div class="results-grid">
+        <div class="result">
+          <div class="label muted">Equipment</div>
+          <div class="value" id="equip">$0</div>
+        </div>
+        <div class="result">
+          <div class="label muted">Installation</div>
+          <div class="value" id="install">$0</div>
+        </div>
+        <div class="result">
+          <div class="label muted">Monitoring (12 mo)</div>
+          <div class="value" id="monitor">$0</div>
+        </div>
+        <div class="result total">
+          <div class="label muted">Estimated First-Year Cost</div>
+          <div class="value large" id="total">$0</div>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="calcBtn" class="btn" onclick="calculate()">Calculate</button>
+        <button id="downloadBtn" class="btn ghost" onclick="downloadEstimate()">Download Estimate (PDF)</button>
+        <a class="btn outline" href="#contact">Request Quotes</a>
+      </div>
+    </section>
+
+    <!-- Comparison cards with affiliate links -->
+    <section id="compare" class="card">
+      <h3>Compare popular models</h3>
+      <p class="muted">Click buy to go to the retailer (affiliate link placeholders).</p>
+
+      <div id="compare-grid" class="results-grid">
+        <!-- cards are populated by script.js using the same DB -->
+      </div>
+
+      <div class="muted" style="margin-top:8px;font-size:13px;">
+        <strong>Affiliate disclosure:</strong> We may earn a commission if you buy through the links on this page — at no extra cost to you.
+      </div>
+    </section>
+
+    <!-- Contact / Lead form (Netlify Forms) -->
+    <section id="contact" class="card">
+      <h3>Request installation quotes</h3>
+      <p class="muted">Provide your contact info and a copy of your estimate. We'll forward your request to vetted installers.</p>
+
+      <form name="lead" id="leadForm" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="lead">
+        <input type="hidden" name="estimate" id="estimateInput" value="">
+
+        <p class="hidden"><label>Don’t fill this out: <input name="bot-field"></label></p>
+
+        <div class="form-grid">
+          <label>
+            Full name
+            <input type="text" name="name" required>
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" required>
+          </label>
+
+          <label>
+            Phone
+            <input type="tel" name="phone">
+          </label>
+
+          <label>
+            ZIP code
+            <input type="text" name="zip" inputmode="numeric">
+          </label>
+
+          <label>
+            Message (optional)
+            <textarea name="message" rows="3"></textarea>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn">Send Request</button>
+          <div class="muted">Or email us at <a href="mailto:info@yourdomain.com">info@yourdomain.com</a></div>
+        </div>
+      </form>
+
+      <div id="formSuccess" class="notice" style="display:none;">Thanks — your request has been submitted. We’ll contact you soon.</div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="card">
+      <h3>FAQ</h3>
+      <details><summary>What does the estimate include?</summary><p>Equipment (selected models) + professional installation (if selected) + 12 months monitoring. Taxes, permits, or special wiring may add to costs.</p></details>
+      <details><summary>Are affiliate links used?</summary><p>Yes — links to retailers may be affiliate links and we receive a small commission at no added cost to you.</p></details>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>© <span id="year"></span> SecureHome. Built for demo.</div>
+      <div class="muted">Privacy • Terms • Affiliate disclosure</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

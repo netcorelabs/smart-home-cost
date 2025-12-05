@@ -70,3 +70,8 @@ input[type="text"],input[type="email"],input[type="tel"],textarea,select{width:1
   .hero{flex-direction:column}
   .hero-right{width:100%}
 }
+.inline-row{display:flex;gap:8px;align-items:center}
+.inline-row select{padding:8px;border-radius:8px;border:1px solid #e6eefc;background:white}
+.btn.small{padding:8px 10px;font-size:14px}
+.btn.outline.small{padding:6px 8px}
+
