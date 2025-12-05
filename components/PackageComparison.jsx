@@ -50,9 +50,6 @@ export default function PackageComparison() {
             )}
             <h3>{pkg.name}</h3>
             <p>${pkg.price} / month</p>
-            <button className="btn-primary">
-              Select
-            </button>
           </div>
         ))}
       </div>
@@ -81,3 +78,26 @@ export default function PackageComparison() {
           border: 2px solid #ccc;
           border-radius: 12px;
           text-align: center;
+          transition: transform 0.3s, border 0.3s, box-shadow 0.3s;
+        }
+
+        .card.recommended {
+          transform: scale(1.08);
+          border: 3px solid #3ab65c;
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        .badge-recommended {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          background-color: #3ab65c;
+          color: #fff;
+          padding: 5px 10px;
+          border-radius: 6px;
+          font-weight: bold;
+        }
+      `}</style>
+    </div>
+  );
+}
