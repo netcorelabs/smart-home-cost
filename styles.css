@@ -94,8 +94,8 @@ input[type="text"],input[type="email"],input[type="tel"],textarea,select{width:1
 .btn.outline.small{padding:6px 8px}
 
 .icon-step {
-  width: 30px;
-  height: 30px;
+  width: 48px;
+  height: 48px;
   scroll-margin-left: 1rem;
   opacity: 0.9;
 }
