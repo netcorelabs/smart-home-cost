@@ -1,12 +1,144 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Smart Home Cost Estimator</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Home Cost Estimator | 2025 Pricing</title>
+
+<!-- SEO -->
+<meta name="description" content="Smart Home Cost Estimator — calculate real installation costs for cameras, smart locks, lighting, hubs, and monitoring in 2025. No signup required.">
+<meta name="keywords" content="smart home cost, home automation cost, security camera price, smart home installation quote">
+<link rel="canonical" href="https://yourdomain.com/">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Smart Home Cost Estimator",
+  "url": "https://yourdomain.com/",
+  "applicationCategory": "FinanceApplication",
+  "description": "Calculate smart home pricing instantly."
+}
+</script>
+
+<!-- Styles -->
+<style>
+* { box-sizing: border-box; font-family: Arial, sans-serif; }
+body { margin:0; background:#f5f6f8; color:#222; line-height:1.6; }
+
+header { background:#111827; color:#fff; padding:2rem; text-align:center; }
+h1 { font-size:2rem; margin:0; }
+
+.container { max-width:900px; margin:2rem auto; background:#fff;
+  padding:2rem; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
+
+.row { display:flex; justify-content:space-between; align-items:center; margin:1.2rem 0; }
+label { font-weight:bold; }
+input[type=range] { width:200px; }
+.value { font-size:1rem; min-width:40px; text-align:right; }
+
+button { background:#2563eb; color:white; border:none; padding:1rem;
+  border-radius:8px; cursor:pointer; font-size:1.1rem; margin-top:1rem; width:100%; }
+button:hover { background:#1d4ed8; }
+
+.result-box { margin-top:2rem; padding:1.5rem; background:#e8f0fe;
+  border-left:6px solid #2563eb; border-radius:8px; }
+.total { font-size:1.8rem; font-weight:bold; }
+
+.footer { text-align:center; font-size:0.85rem; color:#777; margin:2rem 0; }
+</style>
 </head>
+
 <body>
+
+<header>
   <h1>Smart Home Cost Estimator</h1>
-  <p>Hello! This is your Netlify deployment test.</p>
+  <p>Get your customized automation cost in seconds.</p>
+</header>
+
+<div class="container">
+
+  <div class="row">
+    <label>Cameras</label>
+    <input type="range" min="0" max="10" value="2" id="cameras" oninput="updateValue('cameras')">
+    <div class="value" id="cameras-val">2</div>
+  </div>
+
+  <div class="row">
+    <label>Smart Locks</label>
+    <input type="range" min="0" max="5" value="1" id="locks" oninput="updateValue('locks')">
+    <div class="value" id="locks-val">1</div>
+  </div>
+
+  <div class="row">
+    <label>Smart Lights</label>
+    <input type="range" min="0" max="20" value="6" id="lights" oninput="updateValue('lights')">
+    <div class="value" id="lights-val">6</div>
+  </div>
+
+  <div class="row">
+    <label>Voice Assistant Hubs</label>
+    <input type="range" min="0" max="5" value="1" id="hubs" oninput="updateValue('hubs')">
+    <div class="value" id="hubs-val">1</div>
+  </div>
+
+  <button onclick="calculate()">Calculate Cost</button>
+
+  <div id="results" class="result-box" style="display:none;">
+    <div>Estimated Equipment: $<span id="equip"></span></div>
+    <div>Installation Labor: $<span id="install"></span></div>
+    <div>Monitoring (1 year): $<span id="monitor"></span></div>
+    <hr>
+    <div class="total">Total Estimated Cost: $<span id="total"></span></div>
+  </div>
+
+</div>
+
+<div class="footer">
+  © 2025 Smart Home Cost Estimator — All rights reserved.
+</div>
+
+<script>
+const pricing = {
+  cameras: 120,
+  locks: 180,
+  lights: 25,
+  hubs: 80,
+  installRate: 0.4,
+  monitorAnnual: 25 * 12
+};
+
+function updateValue(id) {
+  document.getElementById(id + "-val").innerText =
+    document.getElementById(id).value;
+}
+
+function calculate() {
+  let cam = parseInt(cameras.value);
+  let lock = parseInt(locks.value);
+  let light = parseInt(lights.value);
+  let hub = parseInt(hubs.value);
+
+  let equipment = cam * pricing.cameras +
+                  lock * pricing.locks +
+                  light * pricing.lights +
+                  hub * pricing.hubs;
+
+  let install = Math.round(equipment * pricing.installRate);
+  let monitor = pricing.monitorAnnual;
+
+  let total = equipment + install + monitor;
+
+  document.getElementById("equip").innerText = equipment;
+  document.getElementById("install").innerText = install;
+  document.getElementById("monitor").innerText = monitor;
+  document.getElementById("total").innerText = total;
+
+  document.getElementById("results").style.display = "block";
+}
+</script>
+
 </body>
 </html>
+
