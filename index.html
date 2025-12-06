@@ -1,243 +1,413 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HomeGuard Connect Cost Estimator — Secure Home</title>
-  <meta name="description" content="Estimate full-home smart home & security system costs — equipment, professional installation, and monitoring. Get an itemized estimate and request quotes."/>
-  <link rel="icon" href="/images/favicon.ico" />
-
-  <!-- OpenGraph -->
-  <meta property="og:title" content="Smart Home Cost Estimator — Secure Home" />
-  <meta property="og:description" content="Estimate full-home smart home & security system costs — itemized by model & tier." />
-  <meta property="og:url" content="https://yourdomain.com/" />
-  <meta property="og:type" content="website" />
-
-  <!-- Schema (basic) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebSite",
-    "name":"HomeGuard Connect  Cost Estimator",
-    "url":"https://yourdomain.com/"
-  }
-  </script>
-
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>HomeGuard Estimate | Instant Home Security Pricing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="wrap header-inner">
-      <div class="brand">
-        <img src="/images/HGC-FAV.png" alt="Your brand logo" class="logo" />
-        <div class="brand-text">
-          <h1>HomeGuard Connect Cost Estimator</h1>
-          <p class="tag">Hardware • Installation • Monitoring</p>
-        </div>
-      </div>
-      <nav class="top-nav">
+    <div class="container header-inner">
+      <div class="logo">HomeGuard<span>Estimator</span></div>
+      <nav class="nav-links">
+        <a href="#how-it-works">How it works</a>
         <a href="#calculator">Calculator</a>
-        <a href="#compare">Compare Models</a>
-        <a href="/how-it-works.html">How it works</a>
-        <a class="btn small" href="#contact">Get Quotes</a>
+        <a href="#faq">FAQ</a>
       </nav>
     </div>
   </header>
 
-  <main class="wrap main">
-    <section id="hero" class="hero">
-      <div class="hero-left">
-        <h2>Itemized smart home pricing — choose models and tiers</h2>
-        <p class="lead">Select device models and quantities to get an accurate equipment cost. Compare popular models and follow affiliate links to purchase.</p>
-       <div class="hero-ctas">
-  <a class="btn" href="#calculator">Start estimating</a>
-  <a class="btn ghost" href="#compare">Compare models</a>
-  <a class="btn outline" href="/how-it-works.html">How it works</a>
-</div>
-
-      </div>
-      <div class="hero-right">
-        <div class="card summary-card">
-          <div class="muted">Quick example</div>
-          <div class="large" id="example-avg">$3,240</div>
-          <div class="muted">Average first-year cost for a 3-bedroom home</div>
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>Build Your Perfect Home Security System in 3 Minutes.</h1>
+          <p class="hero-subtitle">
+            Compare cameras, smart locks, video doorbells, and monitoring plans.
+            Get an instant ballpark price before you ever talk to a salesperson.
+          </p>
+          <ul class="hero-bullets">
+            <li>✅ No login, no credit card — just answers</li>
+            <li>✅ See upfront and monthly costs broken down</li>
+            <li>✅ Your estimate can be sent to vendors as a quote request</li>
+          </ul>
+        </div>
+        <div class="hero-card">
+          <h2>Start your free estimate</h2>
+          <p class="hero-card-subtitle">
+            Step 1: Tell us where to send your custom quote.
+          </p>
+          <form id="lead-form">
+            <div class="field">
+              <label for="fullName">Full name *</label>
+              <input id="fullName" name="fullName" required />
+            </div>
+            <div class="field">
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+            <div class="field">
+              <label for="phone">Phone (optional)</label>
+              <input id="phone" name="phone" />
+            </div>
+            <div class="field">
+              <label for="zipCode">ZIP code *</label>
+              <input id="zipCode" name="zipCode" required />
+            </div>
+            <button type="submit" class="btn-primary" id="lead-submit-btn">
+              Unlock Calculator
+            </button>
+            <p class="disclaimer">
+              By continuing, you agree we may share your estimate with matching
+              security vendors who can contact you with offers.
+            </p>
+          </form>
+          <div id="lead-form-message" class="status-message"></div>
         </div>
       </div>
     </section>
 
-    <!-- Calculator with model selectors -->
-    <section id="calculator" class="card">
-      <h3>Smart Home Cost Calculator — Full Home</h3>
-      <p class="muted">Pick device models (tier), set quantities, and view the itemized cost.</p>
-
-      <div class="grid">
-
-        <!-- Cameras -->
-        <div class="control">
-          <label>Cameras</label>
-          <div class="inline-row">
-            <select id="cameraModel" onchange="updateModelLabel('camera')"></select>
-            <input id="cameras" type="range" min="0" max="10" value="3" oninput="updateLabel('cameras')">
-            <div id="cameras-val" class="pill">3</div>
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works" class="section-alt">
+      <div class="container">
+        <h2>How the free estimate works</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Tell us about you</h3>
+            <p>Enter basic contact info and your ZIP code so we can match you with local providers.</p>
           </div>
-          <div class="muted small" id="camera-desc"></div>
-        </div>
-
-        <!-- Smart Locks -->
-        <div class="control">
-          <label>Smart Locks</label>
-          <div class="inline-row">
-            <select id="lockModel" onchange="updateModelLabel('lock')"></select>
-            <input id="locks" type="range" min="0" max="5" value="2" oninput="updateLabel('locks')">
-            <div id="locks-val" class="pill">2</div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Build your system</h3>
+            <p>Add cameras, smart locks, doorbells, and monitoring. See prices update instantly.</p>
           </div>
-          <div class="muted small" id="lock-desc"></div>
-        </div>
-
-        <!-- Smart Lights -->
-        <div class="control">
-          <label>Smart Lights</label>
-          <div class="inline-row">
-            <select id="lightModel" onchange="updateModelLabel('light')"></select>
-            <input id="lights" type="range" min="0" max="50" value="12" oninput="updateLabel('lights')">
-            <div id="lights-val" class="pill">12</div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Send to vendors</h3>
+            <p>Turn your estimate into a quote request that vetted security installers can respond to.</p>
           </div>
-          <div class="muted small" id="light-desc"></div>
         </div>
-
-        <!-- Hubs -->
-        <div class="control">
-          <label>Hubs / Assistants</label>
-          <div class="inline-row">
-            <select id="hubModel" onchange="updateModelLabel('hub')"></select>
-            <input id="hubs" type="range" min="0" max="5" value="1" oninput="updateLabel('hubs')">
-            <div id="hubs-val" class="pill">1</div>
-          </div>
-          <div class="muted small" id="hub-desc"></div>
-        </div>
-
-        <div class="control">
-          <label>Professional Install Complexity</label>
-          <select id="installLevel">
-            <option value="0">DIY (no install)</option>
-            <option value="75">Standard — per device $75</option>
-            <option value="120">Complex — per device $120</option>
-          </select>
-        </div>
-
-        <div class="control">
-          <label>Monitoring Plan (monthly)</label>
-          <select id="monitorPlan">
-            <option value="0">No monitoring</option>
-            <option value="15">Basic — $15 / month</option>
-            <option value="25" selected>Pro — $25 / month</option>
-            <option value="45">Premium — $45 / month</option>
-          </select>
-        </div>
-
-      </div><!-- grid -->
-
-      <div class="results-grid">
-        <div class="result">
-          <div class="label muted">Equipment</div>
-          <div class="value" id="equip">$0</div>
-        </div>
-        <div class="result">
-          <div class="label muted">Installation</div>
-          <div class="value" id="install">$0</div>
-        </div>
-        <div class="result">
-          <div class="label muted">Monitoring (12 mo)</div>
-          <div class="value" id="monitor">$0</div>
-        </div>
-        <div class="result total">
-          <div class="label muted">Estimated First-Year Cost</div>
-          <div class="value large" id="total">$0</div>
-        </div>
-      </div>
-
-      <div class="button-row">
-        <button id="calcBtn" class="btn" onclick="calculate()">Calculate</button>
-        <button id="downloadBtn" class="btn ghost" onclick="downloadEstimate()">Download Estimate (PDF)</button>
-        <a class="btn outline" href="#contact">Request Quotes</a>
       </div>
     </section>
 
-    <!-- Comparison cards with affiliate links -->
-    <section id="compare" class="card">
-      <h3>Compare popular models</h3>
-      <p class="muted">Product Details (affiliate link placeholders).</p>
+    <!-- CALCULATOR -->
+    <section id="calculator" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Home Security Cost Calculator</h2>
+          <p>Step 2: Customize your system. Prices below are estimate ranges, not guaranteed quotes.</p>
+        </div>
 
-      <div id="compare-grid" class="results-grid">
-        <!-- cards are populated by script.js using the same DB -->
+        <div id="calculator-locked" class="calculator-locked">
+          <p>
+            🔒 The calculator unlocks after you complete the form above.  
+            Fill out your info to see live pricing.
+          </p>
+        </div>
+
+        <div id="calculator-unlocked" class="calculator-grid hidden">
+          <div class="calculator-products">
+            <h3>Select your equipment</h3>
+            <div id="products-container" class="products-list">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <div class="calculator-summary">
+            <h3>Estimate summary</h3>
+            <div class="summary-row">
+              <span>Equipment subtotal:</span>
+              <span id="subtotal-products">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Installation subtotal:</span>
+              <span id="subtotal-install">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Monthly monitoring:</span>
+              <span id="subtotal-monthly">$0.00 /mo</span>
+            </div>
+            <hr />
+            <div class="summary-row summary-total">
+              <span>Estimated upfront cost:</span>
+              <span id="total-upfront">$0.00</span>
+            </div>
+
+            <label class="field">
+              <span>Any notes for vendors? (optional)</span>
+              <textarea id="estimate-notes" rows="3" placeholder="e.g. 2-story house, pets, back alley, want mobile app access"></textarea>
+            </label>
+
+            <button id="submit-estimate-btn" class="btn-primary full-width">
+              Send my estimate to vendors
+            </button>
+            <div id="estimate-status" class="status-message"></div>
+          </div>
+        </div>
       </div>
-
-      
-    </section>
-
-    <!-- Contact / Lead form (Netlify Forms) -->
-    <section id="contact" class="card">
-      <h3>Request installation quotes</h3>
-      <p class="muted">Provide your contact info and a copy of your estimate. We'll forward your request to vetted installers.</p>
-
-      <form name="lead" id="leadForm" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="lead">
-        <input type="hidden" name="estimate" id="estimateInput" value="">
-
-        <p class="hidden"><label>Don’t fill this out: <input name="bot-field"></label></p>
-
-        <div class="form-grid">
-          <label>
-            Full name
-            <input type="text" name="name" required>
-          </label>
-
-          <label>
-            Email
-            <input type="email" name="email" required>
-          </label>
-
-          <label>
-            Phone
-            <input type="tel" name="phone">
-          </label>
-
-          <label>
-            ZIP code
-            <input type="text" name="zip" inputmode="numeric">
-          </label>
-
-          <label>
-            Message (optional)
-            <textarea name="message" rows="3"></textarea>
-          </label>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="btn">Send Request</button>
-          <div class="muted">Or email us at <a href="mailto:info@yourdomain.com">info@yourdomain.com</a></div>
-        </div>
-      </form>
-
-      <div id="formSuccess" class="notice" style="display:none;">Thanks — your request has been submitted. We’ll contact you soon.</div>
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="card">
-      <h3>FAQ</h3>
-      <details><summary>What does the estimate include?</summary><p>Equipment (selected models) + professional installation (if selected) + 12 months monitoring. Taxes, permits, or special wiring may add to costs.</p></details>
-      <details><summary>Are affiliate links used?</summary><p>Yes — links to retailers may be affiliate links and we receive a small commission at no added cost to you.</p></details>
+    <section id="faq" class="section-alt">
+      <div class="container">
+        <h2>FAQ</h2>
+        <details class="faq-item">
+          <summary>Is this estimate a binding quote?</summary>
+          <p>No. It’s a ballpark estimate based on typical equipment and labor. Vendors may adjust pricing after a site visit.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you sell security systems directly?</summary>
+          <p>We’re an independent comparison tool. We connect you with licensed home security providers in your area.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do vendors receive my information?</summary>
+          <p>Your contact details and estimate summary are shared securely with matching providers so they can reach out with offers.</p>
+        </details>
+      </div>
     </section>
-
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <div>© <span id="year"></span> HomeGuard Connect .</div>
-      <div class="muted">Privacy • Terms • Affiliate disclosure</div>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> HomeGuard Estimator</span>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    const state = {
+      lead: null,
+      products: [],
+      selectedItems: new Map(), // key: productId, value: quantity
+      summary: {
+        subtotalProducts: 0,
+        subtotalInstall: 0,
+        subtotalMonthly: 0,
+        totalUpfront: 0,
+      },
+    };
+
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Handle lead form submit (unlock calculator)
+    const leadForm = document.getElementById('lead-form');
+    const leadMessage = document.getElementById('lead-form-message');
+    const leadSubmitBtn = document.getElementById('lead-submit-btn');
+    const calcLocked = document.getElementById('calculator-locked');
+    const calcUnlocked = document.getElementById('calculator-unlocked');
+
+    leadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      leadMessage.textContent = '';
+      leadSubmitBtn.disabled = true;
+      leadSubmitBtn.textContent = 'Unlocking...';
+
+      const formData = new FormData(leadForm);
+      const lead = {
+        fullName: formData.get('fullName'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        zipCode: formData.get('zipCode'),
+      };
+
+      // We don't store the lead yet in DB; we'll do that on final estimate submit,
+      // but we keep it in memory here.
+      state.lead = lead;
+
+      // Unlock calculator UI
+      calcLocked.classList.add('hidden');
+      calcUnlocked.classList.remove('hidden');
+      leadMessage.textContent = '✅ Calculator unlocked. Scroll down to build your system.';
+      leadMessage.classList.add('success');
+      leadSubmitBtn.textContent = 'Calculator unlocked';
+      leadSubmitBtn.disabled = true;
+
+      // Fetch products now
+      await loadProducts();
+    });
+
+    async function loadProducts() {
+      const container = document.getElementById('products-container');
+      container.innerHTML = '<p>Loading products...</p>';
+      try {
+        const res = await fetch('/.netlify/functions/get-products');
+        if (!res.ok) throw new Error('Failed to fetch products');
+        const products = await res.json();
+        state.products = products;
+        renderProducts();
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = '<p class="error">Unable to load products. Please try again later.</p>';
+      }
+    }
+
+    function renderProducts() {
+      const container = document.getElementById('products-container');
+      if (state.products.length === 0) {
+        container.innerHTML = '<p>No products available right now.</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+
+      let currentCategory = null;
+
+      state.products.forEach((p) => {
+        if (p.category !== currentCategory) {
+          currentCategory = p.category;
+          const categoryHeader = document.createElement('h4');
+          categoryHeader.textContent = currentCategory;
+          categoryHeader.className = 'product-category-header';
+          container.appendChild(categoryHeader);
+        }
+
+        const card = document.createElement('div');
+        card.className = 'product-card';
+
+        const qty = state.selectedItems.get(p.id) || 0;
+
+        card.innerHTML = `
+          <div class="product-main">
+            <div>
+              <h5>${p.name}</h5>
+              <p class="product-desc">${p.description || ''}</p>
+            </div>
+            <div class="product-pricing">
+              <div>Equipment: <strong>${formatter.format(p.unit_price)}</strong></div>
+              <div>Install: <strong>${formatter.format(p.install_price)}</strong></div>
+              <div>Billing: <span class="badge">${p.billing_type === 'monthly' ? 'Monthly' : 'One-time'}</span></div>
+            </div>
+          </div>
+          <div class="product-controls">
+            <label>Quantity</label>
+            <div class="qty-controls">
+              <button type="button" class="qty-btn" data-action="dec">−</button>
+              <input type="number" min="0" value="${qty}" class="qty-input" />
+              <button type="button" class="qty-btn" data-action="inc">+</button>
+            </div>
+          </div>
+        `;
+
+        const qtyInput = card.querySelector('.qty-input');
+        const decBtn = card.querySelector('.qty-btn[data-action="dec"]');
+        const incBtn = card.querySelector('.qty-btn[data-action="inc"]');
+
+        const updateQty = (newQty) => {
+          const q = Math.max(0, Number(newQty) || 0);
+          if (q === 0) {
+            state.selectedItems.delete(p.id);
+          } else {
+            state.selectedItems.set(p.id, q);
+          }
+          qtyInput.value = q;
+          recalcSummary();
+        };
+
+        decBtn.addEventListener('click', () => updateQty(Number(qtyInput.value) - 1));
+        incBtn.addEventListener('click', () => updateQty(Number(qtyInput.value) + 1));
+        qtyInput.addEventListener('change', (e) => updateQty(e.target.value));
+
+        container.appendChild(card);
+      });
+    }
+
+    function recalcSummary() {
+      let subtotalProducts = 0;
+      let subtotalInstall = 0;
+      let subtotalMonthly = 0;
+
+      for (const [productId, qty] of state.selectedItems.entries()) {
+        const p = state.products.find((prod) => prod.id === productId);
+        if (!p) continue;
+        const q = Number(qty) || 0;
+        subtotalProducts += q * Number(p.unit_price || 0);
+        subtotalInstall += q * Number(p.install_price || 0);
+        if (p.billing_type === 'monthly') {
+          subtotalMonthly += q * Number(p.unit_price || 0);
+        }
+      }
+
+      const totalUpfront = subtotalProducts + subtotalInstall;
+
+      state.summary = { subtotalProducts, subtotalInstall, subtotalMonthly, totalUpfront };
+
+      document.getElementById('subtotal-products').textContent = formatter.format(subtotalProducts);
+      document.getElementById('subtotal-install').textContent = formatter.format(subtotalInstall);
+      document.getElementById('subtotal-monthly').textContent = formatter.format(subtotalMonthly) + (subtotalMonthly > 0 ? ' /mo' : '');
+      document.getElementById('total-upfront').textContent = formatter.format(totalUpfront);
+    }
+
+    // Submit estimate (this is where lead + selections get saved to Neon)
+    const submitEstimateBtn = document.getElementById('submit-estimate-btn');
+    const estimateStatus = document.getElementById('estimate-status');
+
+    submitEstimateBtn.addEventListener('click', async () => {
+      estimateStatus.textContent = '';
+      estimateStatus.className = 'status-message';
+
+      if (!state.lead) {
+        estimateStatus.textContent = 'Please complete the form at the top of the page first.';
+        estimateStatus.classList.add('error');
+        return;
+      }
+
+      if (state.selectedItems.size === 0) {
+        estimateStatus.textContent = 'Add at least one item to your system to get an estimate.';
+        estimateStatus.classList.add('error');
+        return;
+      }
+
+      submitEstimateBtn.disabled = true;
+      submitEstimateBtn.textContent = 'Sending estimate...';
+
+      const items = Array.from(state.selectedItems.entries()).map(([productId, quantity]) => ({
+        productId,
+        quantity,
+      }));
+
+      const payload = {
+        lead: state.lead,
+        items,
+        notes: document.getElementById('estimate-notes').value,
+      };
+
+      try {
+        const res = await fetch('/.netlify/functions/submit-estimate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to send estimate');
+        }
+
+        const data = await res.json();
+        const s = data.summary || {};
+
+        estimateStatus.innerHTML =
+          '✅ Your estimate was sent to matching vendors.<br>' +
+          `Upfront: <strong>${formatter.format(s.totalUpfront || 0)}</strong> &nbsp; ` +
+          `Monthly: <strong>${formatter.format(s.subtotalMonthly || 0)}</strong>`;
+        estimateStatus.classList.add('success');
+      } catch (err) {
+        console.error(err);
+        estimateStatus.textContent = 'Something went wrong sending your estimate. Please try again.';
+        estimateStatus.classList.add('error');
+      } finally {
+        submitEstimateBtn.disabled = false;
+        submitEstimateBtn.textContent = 'Send my estimate to vendors';
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin | HomeGuard Leads</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <style>
+    .admin-wrapper {
+      padding: 2rem 0;
+    }
+    .admin-card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 18px;
+      padding: 1.25rem 1.1rem;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.7);
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+    }
+    .admin-table-wrapper {
+      margin-top: 0.6rem;
+      max-height: 65vh;
+      overflow: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(30, 64, 175, 0.5);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    thead {
+      background: rgba(15, 23, 42, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    th, td {
+      padding: 0.45rem 0.6rem;
+      border-bottom: 1px solid rgba(30, 64, 175, 0.5);
+      text-align: left;
+    }
+    th {
+      font-weight: 600;
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td {
+      background: rgba(15, 23, 42, 0.75);
+    }
+    .chip {
+      display: inline-flex;
+      padding: 0.08rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.7rem;
+      color: #e5e7eb;
+    }
+    .admin-login {
+      max-width: 420px;
+      margin: 4rem auto;
+    }
+    .admin-login h1 {
+      margin-bottom: 0.5rem;
+    }
+    .admin-login p {
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+    .admin-meta {
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+    .btn-secondary {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: transparent;
+      color: #e5e7eb;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      background: rgba(15, 23, 42, 0.9);
+    }
+    .admin-status {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+    }
+    .admin-status.error { color: #f97373; }
+    .admin-status.success { color: #4ade80; }
+
+    @media (max-width: 820px) {
+      .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      th, td {
+        white-space: nowrap;
+      }
+      .admin-table-wrapper {
+        max-height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">HomeGuard<span>Admin</span></div>
+      <div class="nav-links">
+        <a href="/">Back to site</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-wrapper">
+    <div class="container">
+      <!-- LOGIN CARD -->
+      <div id="admin-login" class="admin-login admin-card">
+        <h1>Admin Sign-in</h1>
+        <p>Enter the internal admin password to view and export leads.</p>
+        <form id="admin-login-form">
+          <div class="field">
+            <label for="admin-password">Admin password</label>
+            <input id="admin-password" name="password" type="password" required />
+          </div>
+          <button type="submit" class="btn-primary">Sign in</button>
+        </form>
+        <div id="admin-login-status" class="admin-status"></div>
+      </div>
+
+      <!-- MAIN ADMIN UI -->
+      <div id="admin-main" class="admin-card hidden">
+        <div class="admin-header">
+          <div>
+            <h2>Lead & Estimate Feed</h2>
+            <div class="admin-meta">
+              Most recent estimates (max 500). Data pulled live from Neon.
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <button id="refresh-btn" class="btn-secondary">Refresh</button>
+            <button id="export-btn" class="btn-primary">Export CSV</button>
+          </div>
+        </div>
+
+        <div id="admin-main-status" class="admin-status"></div>
+
+        <div class="admin-table-wrapper">
+          <table id="leads-table">
+            <thead>
+              <tr>
+                <th>Created</th>
+                <th>Lead name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>ZIP</th>
+                <th>Upfront</th>
+                <th>Monthly</th>
+                <th>Lead ID</th>
+                <th>Estimate ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- filled by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const loginCard = document.getElementById('admin-login');
+    const loginForm = document.getElementById('admin-login-form');
+    const loginStatus = document.getElementById('admin-login-status');
+    const adminMain = document.getElementById('admin-main');
+    const mainStatus = document.getElementById('admin-main-status');
+    const tableBody = document.querySelector('#leads-table tbody');
+    const refreshBtn = document.getElementById('refresh-btn');
+    const exportBtn = document.getElementById('export-btn');
+
+    let adminPassword = null;
+    const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+    function formatDate(dtString) {
+      if (!dtString) return '';
+      const d = new Date(dtString);
+      if (isNaN(d)) return dtString;
+      return d.toLocaleString();
+    }
+
+    async function fetchLeads() {
+      if (!adminPassword) return;
+      mainStatus.textContent = 'Loading leads...';
+      mainStatus.className = 'admin-status';
+
+      try {
+        const res = await fetch('/.netlify/functions/admin-get-leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: adminPassword }),
+        });
+
+        if (res.status === 401) {
+          throw new Error('Unauthorized – password incorrect or expired');
+        }
+
+        if (!res.ok) {
+          throw new Error('Failed to load leads');
+        }
+
+        const rows = await res.json();
+        renderLeads(rows);
+        mainStatus.textContent = `Loaded ${rows.length} records.`;
+        mainStatus.classList.add('success');
+      } catch (err) {
+        console.error(err);
+        mainStatus.textContent = err.message || 'Error loading leads.';
+        mainStatus.classList.add('error');
+      }
+    }
+
+    function renderLeads(rows) {
+      tableBody.innerHTML = '';
+      if (!rows || rows.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 9;
+        td.textContent = 'No leads found yet.';
+        tr.appendChild(td);
+        tableBody.appendChild(tr);
+        return;
+      }
+
+      rows.forEach((r) => {
+        const tr = document.createElement('tr');
+
+        const createdTd = document.createElement('td');
+        createdTd.textContent = formatDate(r.created_at);
+        tr.appendChild(createdTd);
+
+        const nameTd = document.createElement('td');
+        nameTd.textContent = r.full_name || '';
+        tr.appendChild(nameTd);
+
+        const emailTd = document.createElement('td');
+        emailTd.textContent = r.email || '';
+        tr.appendChild(emailTd);
+
+        const phoneTd = document.createElement('td');
+        phoneTd.textContent = r.phone || '';
+        tr.appendChild(phoneTd);
+
+        const zipTd = document.createElement('td');
+        zipTd.textContent = r.zip_code || '';
+        tr.appendChild(zipTd);
+
+        const upfrontTd = document.createElement('td');
+        upfrontTd.textContent = money.format(Number(r.total_upfront || 0));
+        tr.appendChild(upfrontTd);
+
+        const monthlyTd = document.createElement('td');
+        const monthly = Number(r.subtotal_monthly || 0);
+        monthlyTd.textContent = monthly > 0 ? money.format(monthly) + '/mo' : '-';
+        tr.appendChild(monthlyTd);
+
+        const leadIdTd = document.createElement('td');
+        leadIdTd.textContent = r.lead_id;
+        tr.appendChild(leadIdTd);
+
+        const estIdTd = document.createElement('td');
+        estIdTd.textContent = r.estimate_id;
+        tr.appendChild(estIdTd);
+
+        tableBody.appendChild(tr);
+      });
+    }
+
+    // Handle login
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pwd = document.getElementById('admin-password').value;
+      loginStatus.textContent = '';
+      loginStatus.className = 'admin-status';
+
+      if (!pwd) {
+        loginStatus.textContent = 'Password is required.';
+        loginStatus.classList.add('error');
+        return;
+      }
+
+      loginStatus.textContent = 'Verifying...';
+
+      try {
+        const res = await fetch('/.netlify/functions/admin-get-leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pwd }),
+        });
+
+        if (res.status === 401) {
+          throw new Error('Incorrect admin password.');
+        }
+        if (!res.ok) {
+          throw new Error('Unable to verify password at this time.');
+        }
+
+        const rows = await res.json();
+        adminPassword = pwd;
+
+        loginCard.classList.add('hidden');
+        adminMain.classList.remove('hidden');
+
+        renderLeads(rows);
+        mainStatus.textContent = `Signed in. Loaded ${rows.length} records.`;
+        mainStatus.classList.add('success');
+      } catch (err) {
+        console.error(err);
+        loginStatus.textContent = err.message;
+        loginStatus.classList.add('error');
+      }
+    });
+
+    refreshBtn.addEventListener('click', fetchLeads);
+
+    exportBtn.addEventListener('click', async () => {
+      if (!adminPassword) return;
+      mainStatus.textContent = 'Preparing CSV export...';
+      mainStatus.className = 'admin-status';
+
+      try {
+        const res = await fetch('/.netlify/functions/admin-export-leads-csv', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' }, // body is still JSON
+          body: JSON.stringify({ password: adminPassword }),
+        });
+
+        if (res.status === 401) {
+          throw new Error('Unauthorized – password incorrect or expired.');
+        }
+        if (!res.ok) throw new Error('Failed to generate CSV.');
+
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+        a.download = `homeguard_leads_${ts}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+
+        mainStatus.textContent = 'CSV downloaded.';
+        mainStatus.classList.add('success');
+      } catch (err) {
+        console.error(err);
+        mainStatus.textContent = err.message || 'Error exporting CSV.';
+        mainStatus.classList.add('error');
+      }
+    });
+  </script>
+</body>
+</html>

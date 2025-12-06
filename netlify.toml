@@ -1,6 +1,12 @@
 [build]
   publish = "."
-  command = ""
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[dev]
+  functionsPort = 9999
 
 [context.production.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
